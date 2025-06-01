@@ -1,28 +1,37 @@
-// import { AtpAgent } from "@atproto/api";
-// import * as process from 'process';
+import { AtpAgent } from "@atproto/api";
+import * as dotenv from 'dotenv';
+import * as process from "process";
 import generateIndicator from "./indicator_generation.js";
 
+dotenv.config();
 
-// async function agentInit() { 
-//     // create a bsky agent
-//     const agent = new AtpAgent({
-//         service: 'https://bsky.social'
-//     });
+async function agentInit() { 
+    const agent = new AtpAgent({
+        service: "https://bsky.social", 
+    });
 
-//     await agent.login({
-//         identifier: process.env.BLUESKY_USERNAME,
-//         password: process.env.BLUESKY_PASSWORD,
-//     });
+    await agent.login({
+        identifier: process.env.BLUESKY_USERNAME,
+        password: process.env.BLUESKY_PASSWORD,
+    });
 
-//     return agent; 
-// }
+    return agent; 
+}
 
 async function postIndicator() {
     try {
+        const agent = await agentInit();
+
         const indicator = await generateIndicator(); 
-        console.log('hi', indicator);
+
+        await agent.post({
+            text: indicator, 
+            createdAt: new Date().toISOString(),
+        });
+
+        console.log('post posted!!!', indicator);
     } catch (error) {
-        console.error('economy is good tbh', error);
+        console.error('the economy is good tbh', error);
     }
 }
 
