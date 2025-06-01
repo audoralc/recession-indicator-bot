@@ -1,6 +1,9 @@
 name: Post Recession Indicator every 4 hours
 
-on: 
+on:
+  push:
+    branches:
+      - main
   schedule: 
     - cron: '0 */4 * * *'
 
