@@ -5,9 +5,8 @@ on:
     - cron: '0 */4 * * *'
 
 jobs: 
-  post_skeet: 
-    name: post skeet: 
-          runs-on: ubuntu-latest
+  post_skeet:
+    runs-on: ubuntu-latest
 
     steps: 
       - name: checkout repo 
